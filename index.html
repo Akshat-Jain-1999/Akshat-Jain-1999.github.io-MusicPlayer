@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Jost&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main_header">
+        <div class="center_div">
+            <h2 id="title">Bekhayali</h2>
+            <h3 id="artist">Sachet Tandon</h3>
+            <div class="image">
+                <img src="images/bekhayali.jpg" alt="">
+            </div>
+            <audio src="music/Bekhayali.mp3" onended="nextSong()"></audio>
+            <div class="music_controls">
+                <i id="prev" class="fas fa-backward" title="Previous" onclick=prevSong()></i>
+                <i id="play" class="fas fa-play" title="Play" onclick="fun()"></i>
+                <i id="next" class="fas fa-forward" title="Next" onclick=nextSong()></i>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        const songs = [
+            {
+                name: "Bekhayali",
+                title: "Bekhayali",
+                artist: "Sachet Tandon"
+            },
+            {
+                name: "Kaise Hua",
+                title: "Kaise Hua",
+                artist: "Vishal Mishra"
+            },
+            {
+                name: "Mere Sohneya",
+                title: "Mere Sohneya",
+                artist: "Sachet Tandon, Parampara Thakur"
+            },
+            {
+                name: "Pehla Pyaar",
+                title: "Pehla Pyaar",
+                artist: "Armaan Malik"
+            },
+            {
+                name: "Tera Ban Jaunga",
+                title: "Tera Ban Jaunga",
+                artist: "Tulsi Kumar, Akhil Sachdeva"
+            },
+            {
+                name: "Tujhe Kitna Chahein",
+                title: "Tujhe Kitna Chahein",
+                artist: "Jubin Nautiyal"
+            },
+            {
+                name: "BekhayaliA",
+                title: "Bekhayali Arijit Version",
+                artist: "Arijit Singh"
+            },
+            {
+                name: "Tujhe Kitna Chahne",
+                title: "Tujhe Kitna Chahne Lage Hum",
+                artist: "Arijit Singh"
+            },
+        ]
+
+        const music = document.querySelector("audio");
+        const artist = document.getElementById("artist");
+        const title = document.getElementById("title");
+        const image = document.querySelector("img");
+        const play = document.getElementById("play");
+        const prev = document.getElementById("prev");
+        const next = document.getElementById("next");
+        let isPlaying = false;
+
+        function playMusic()
+        {
+            isPlaying = true;
+            music.play();
+            play.classList.replace("fa-play","fa-pause");
+            image.classList.add("rotate");
+        }
+
+        function pauseMusic(){
+            isPlaying = false;
+            music.pause();
+            play.classList.replace("fa-pause","fa-play");
+            image.classList.remove("rotate");
+        }
+        function fun() 
+        {
+            if(isPlaying == false)
+            playMusic();
+            else
+            pauseMusic();
+        }
+        let songIndex =0;
+        function nextSong(){
+            songIndex=(songIndex+1)%songs.length;
+            loadSong(songs[songIndex]);
+            playMusic();
+        }
+
+        function prevSong(){
+            songIndex=(songIndex-1+songs.length)%songs.length;
+            loadSong(songs[songIndex]);
+            playMusic();
+        }
+
+        function loadSong(songs){
+            title.textContent = songs.title;
+            artist.textContent = songs.artist;
+            music.src = "music/"+songs.name+".mp3";
+            image.src="images/"+songs.name+".jpg";
+        }
+        if(music.ended)
+        nextSong();
+    </script>
+</body>
+</html>
