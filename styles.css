@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* font-family: 'Anton', sans-serif; */
     font-family: 'Jost', sans-serif;
 }
 
@@ -25,7 +24,8 @@
     height: 70%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    padding-top: 3rem;
+    /* justify-content: center; */
     align-items: center;
     box-shadow: 0px 12px 30px #cc7777;
     border-radius: 20px;
@@ -64,8 +64,8 @@ img{
 }
 .music_controls{
     width: 10rem;
-    margin-top: 2.5rem;
-    margin-bottom: -10px;
+    margin-top: 1rem;
+    margin-bottom: -20px;
     color: black;
     display: flex;
     flex-direction: row;
@@ -124,10 +124,14 @@ i:hover{
 @media screen and (max-width:728px){
     .center_div{
         width: 75%;
-        height: 70%;
+        height: 65%;
+        padding-top: 1.5rem;
+    }
+    #title{
+        font-size: 1rem;
     }
     #artist{
-        margin-bottom: 25px;
+        font-size: 0.7rem;
     }
     .main_header{
         background-image:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.7)), url(images/bg2.jpg);
@@ -151,11 +155,51 @@ i:hover{
     }
     .center_div{
         width: 65%;
-        height: 65%
+        height: 60%
     }
     .image{
         width: 8rem;
         height: 8rem;
     }
+
+    .music_controls{
+        width: 7rem;
+    }
 }
 
+.progressbar_container
+{
+    width: 85%;
+    height: auto;
+    font-size: 13px;
+}
+
+.progress_div{
+    position: relative;
+    width: 100%;
+    height: 0.2rem;
+    box-shadow:  0 0 5px 1px white;
+    border-radius: 5px;
+    cursor: pointer;
+    overflow: hidden;
+    appearance: none;
+}
+
+.progress{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0%;
+    height: 100%;
+    background-color: white;
+}
+
+
+
+.progress_duration_meter{
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom:0.3rem;
+    margin-top: 2rem;
+}

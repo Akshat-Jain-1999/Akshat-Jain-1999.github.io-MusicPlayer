@@ -16,7 +16,20 @@
             <div class="image">
                 <img src="images/Bekhayali.jpg" alt="">
             </div>
-            <audio src="music/Bekhayali.mp3" onended="nextSong()"></audio>
+            
+            <audio src="music/Bekhayali.mp3" onended="randomSong()"></audio>
+            <div class="progressbar_container" id="progress_container">
+                <div class="progress_duration_meter">
+                    <div id="current_time">0:00</div>
+                    
+                    <div id="duration">6:11</div>
+                </div>
+                <div class="progress_div" id="progress_div">
+                    <div class="progress" id="progress">
+    
+                    </div>
+                </div>
+            </div>
             <div class="music_controls">
                 <i id="prev" class="fas fa-backward" title="Previous" onclick=prevSong()></i>
                 <i id="play" class="fas fa-play" title="Play" onclick="fun()"></i>
@@ -64,7 +77,7 @@
             },
             {
                 name: "Tujhe Kitna Chahne",
-                title: "Tujhe Kitna Chahne Lage Hum",
+                title: "Tujhe Kitna Chahne Lage",
                 artist: "Arijit Singh"
             },
         ]
@@ -76,6 +89,8 @@
         const play = document.getElementById("play");
         const prev = document.getElementById("prev");
         const next = document.getElementById("next");
+        let progress = document.getElementById("progress");
+
         let isPlaying = false;
 
         function playMusic()
@@ -100,6 +115,13 @@
             pauseMusic();
         }
         let songIndex =0;
+
+        function randomSong(){
+            songIndex = Math.floor(Math.random() * songs.length);
+            loadSong(songs[songIndex]);
+            playMusic();
+        }
+
         function nextSong(){
             songIndex=(songIndex+1)%songs.length;
             loadSong(songs[songIndex]);
@@ -118,8 +140,70 @@
             music.src = "music/"+songs.name+".mp3";
             image.src="images/"+songs.name+".jpg";
         }
-        if(music.ended)
-        nextSong();
+
+        music.addEventListener('timeupdate', (event) => {
+            // console.log(event);
+            let curr_time = event.srcElement.currentTime;
+            let tot_dur = event.srcElement.duration;
+            
+            let played = (curr_time/tot_dur) * 100;
+            progress.style.width = `${played}%`;
+
+            let min = Math.floor(curr_time/60);
+            let sec = Math.floor(curr_time%60);
+
+            let tot_min = Math.floor(tot_dur/60);
+            let tot_sec = Math.floor(tot_dur%60);
+
+            if(sec<10)
+            document.getElementById('current_time').innerHTML = `${min}:0${sec}`;
+            else
+            document.getElementById('current_time').innerHTML = `${min}:${sec}`;
+            if(tot_dur)
+            document.getElementById('duration').innerHTML = `${tot_min}:${tot_sec}`;
+
+
+        });
+        let bar = document.getElementById('progress_div');
+
+            bar.addEventListener('mousemove',(event1) =>{
+                let length = event1.offsetX;
+                let total_length = event1.srcElement.clientWidth;
+                tit_tot_dur = music.duration;
+                let perc = (length/total_length)*100;
+
+                let y= (tit_tot_dur/100)*perc;
+
+                let len_min = Math.floor(y/60);
+                let len_sec = Math.floor(y%60);
+                if(len_sec<10)
+                bar.title = `${len_min}:0${len_sec}`;
+                else
+                bar.title = `${len_min}:${len_sec}`;
+                console.log(event1);
+            });
+
+            bar.addEventListener('click' , (event2) => {
+            let x = event2.offsetX;
+            let total = event2.srcElement.clientWidth;
+
+            let per = (x/total)*100;
+
+            tot_dur = music.duration;
+
+            // console.log(music.duration);
+            console.log(tot_dur);
+
+            progress.style.width = `${per}%`;
+            
+            music.currentTime = (tot_dur/100)*per;
+
+            // playMusic();
+
+            // console.log(currentTime);
+        });
+
+
     </script>
 </body>
 </html>
