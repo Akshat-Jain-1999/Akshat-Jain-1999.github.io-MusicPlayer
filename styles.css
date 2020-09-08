@@ -27,8 +27,8 @@
     padding-top: 3rem;
     /* justify-content: center; */
     align-items: center;
-    box-shadow: 0px 12px 30px #cc7777;
-    border-radius: 20px;
+    box-shadow: 0px 0px 10px 2px #cc7777;
+    border-radius: 20px
 }
 
 #title{
