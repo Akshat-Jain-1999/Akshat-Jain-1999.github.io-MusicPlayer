@@ -167,6 +167,16 @@ i:hover{
     }
 }
 
+@media screen and (max-height:623px){
+    .image{
+        width: 6rem;
+        height: 6rem;
+    }
+    .progress_duration_meter{
+        margin-top: 1rem;
+    }
+}
+
 .progressbar_container
 {
     width: 85%;
